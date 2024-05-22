@@ -8,12 +8,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float wallSlideSpeed;
-    [SerializeField] private float wallStickCooldownTime = 0.5f; // Cooldown time to stick to the wall again
     private Rigidbody2D body;
     private Animator anim;
     private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
-    private float lastWallJumpTime; // Track the time of the last wall jump
     private bool isJumping;
 
     private void Awake()
@@ -54,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (wallJumpCooldown > 0.2f)
         {
-            if (onWall() && !isGrounded() && Time.time > lastWallJumpTime + wallStickCooldownTime)
+            if (onWall() && !isGrounded())
             {
                 if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
                 {
@@ -99,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
             wallJumpCooldown = 0;
             body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 20, 6);
             anim.SetTrigger("Jump");
-            lastWallJumpTime = Time.time; // Record the time of the wall jump
         }
     }
 
