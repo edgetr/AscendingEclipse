@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 2129409569}
   - component: {fileID: 2129409573}
   m_Layer: 0
-  m_Name: Square
+  m_Name: FemWarrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -719,7 +719,7 @@ Animator:
   m_GameObject: {fileID: 2129409567}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6a58da2b2f9b8a4468298601b26ee817, type: 2}
+  m_Controller: {fileID: 9100000, guid: 48d59a9e638c8f64ab4f19fe13a87f6f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
