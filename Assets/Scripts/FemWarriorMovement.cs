@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 anim.SetBool("WallSlide", false);
                 anim.SetBool("OnWall", false);
-                body.gravityScale = 7;
+                body.gravityScale = 6;
             }
 
             if (Input.GetKey(KeyCode.Space))
