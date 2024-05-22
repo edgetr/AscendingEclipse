@@ -41,6 +41,8 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: 0567e0382a44b18468a17351a0abef99,
+      type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Low
@@ -77,6 +79,8 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: 7a703782105a16343b80ade775e6a05c,
+      type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Medium
@@ -113,6 +117,8 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: c893e697fe8740d4289d5f377d59096a,
+      type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: High
@@ -149,6 +155,8 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: 3228d3fb962231443adbde03957d4739,
+      type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Very High
@@ -185,6 +193,8 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: ce0a72bd24882284199bc0a4ee9c7cab,
+      type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Ultra
@@ -202,6 +212,10 @@ QualitySettings:
     textureQuality: 0
     anisotropicTextures: 2
     antiAliasing: 2
+    skinWeights: 4
+    textureQuality: 0
+    anisotropicTextures: 2
+    antiAliasing: 0
     softParticles: 1
     softVegetation: 1
     realtimeReflectionProbes: 1
@@ -221,6 +235,8 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: 665072d3994004544bb27f2c5fca09c4,
+      type: 2}
     excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
     Android: 2
@@ -231,6 +247,8 @@ QualitySettings:
     PS4: 5
     PS5: 5
     Stadia: 5
+    Nintendo Switch: 5
+    PS4: 5
     Standalone: 5
     WebGL: 3
     Windows Store Apps: 5
