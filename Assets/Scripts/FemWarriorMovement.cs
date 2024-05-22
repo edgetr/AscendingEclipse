@@ -1,22 +1,21 @@
-using System.IO;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
+    [SerializeField] private float wallSlideSpeed;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
-    [SerializeField] private float wallSlideSpeed;
     private Rigidbody2D body;
     private Animator anim;
     private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
-    private bool isJumping;
+    private float horizontalInput;
 
     private void Awake()
     {
-        // References for RigidBody2D and Animator
+        // Grab references for Rigidbody2D and Animator from the object
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
@@ -24,59 +23,56 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+        horizontalInput = Input.GetAxis("Horizontal");
 
-        // Flip player right-left according to where it goes
+        // Flip player when moving left-right
         if (horizontalInput > 0.01f)
-        {
             transform.localScale = new Vector3(10, 10, 10);
-        }
         else if (horizontalInput < -0.01f)
-        {
             transform.localScale = new Vector3(-10, 10, 10);
-        }
 
+        // Set animator parameters
         anim.SetBool("Run", horizontalInput != 0);
         anim.SetBool("Grounded", isGrounded());
-        anim.SetBool("OnWall", onWall());
 
-        if (!isGrounded() && body.velocity.y < 0 && !onWall())
+        // Prioritize wall animations over falling
+        if (onWall())
         {
-            anim.SetBool("OnFall", true);
+            anim.SetBool("OnSlide", onSlide());
+            anim.SetBool("OnWall", onWall());
+            anim.SetBool("OnFall", false);
         }
         else
         {
-            anim.SetBool("OnFall", false);
+            anim.SetBool("OnWall", false);
+            anim.SetBool("OnSlide", false);
+            anim.SetBool("OnFall", onFall());
         }
 
+        // Wall jump logic
         if (wallJumpCooldown > 0.2f)
         {
+            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+
             if (onWall() && !isGrounded())
             {
-                if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+                if (onSlide())
                 {
                     WallSlide();
                 }
                 else
                 {
-                    anim.SetBool("WallSlide", false);
-                    anim.SetBool("OnWall", true);
                     body.gravityScale = 0;
                     body.velocity = Vector2.zero;
                 }
             }
             else
             {
-                anim.SetBool("WallSlide", false);
-                anim.SetBool("OnWall", false);
-                body.gravityScale = 6;
+                body.gravityScale = 7;
             }
 
             if (Input.GetKey(KeyCode.Space))
-            {
                 Jump();
-            }
         }
         else
         {
@@ -90,21 +86,27 @@ public class PlayerMovement : MonoBehaviour
         {
             body.velocity = new Vector2(body.velocity.x, jumpPower);
             anim.SetTrigger("Jump");
-            isJumping = true;
         }
         else if (onWall() && !isGrounded())
         {
+            if (horizontalInput == 0)
+            {
+                body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 10, 0);
+                transform.localScale = new Vector3(-Mathf.Sign(transform.localScale.x) * 10, transform.localScale.y, transform.localScale.z);
+            }
+            else
+            {
+                body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 3, 6);
+            }
+
             wallJumpCooldown = 0;
-            body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 20, 6);
             anim.SetTrigger("Jump");
         }
     }
 
     private void WallSlide()
     {
-        body.velocity = new Vector2(body.velocity.x, -wallSlideSpeed);
-        anim.SetBool("WallSlide", true);
-        anim.SetBool("OnWall", false);  // Ensure OnWall is false when sliding
+        body.velocity = new Vector2(0, -wallSlideSpeed);
     }
 
     private bool isGrounded()
@@ -121,7 +123,12 @@ public class PlayerMovement : MonoBehaviour
 
     private bool onFall()
     {
-        // Character is falling if not grounded, not on a wall, and has negative y-velocity
         return !isGrounded() && !onWall() && body.velocity.y < 0;
+    }
+
+    private bool onSlide()
+    {
+        // Check if the player is on the wall, not grounded, and pressing the down key or 's' key
+        return onWall() && !isGrounded() && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S));
     }
 }
