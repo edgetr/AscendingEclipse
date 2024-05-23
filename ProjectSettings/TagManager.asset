@@ -14,8 +14,8 @@ TagManager:
   - Water
   - UI
   - Wall
-  - 
-  - 
+  - Background
+  - Warrior
   - 
   - 
   - 
@@ -40,6 +40,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Character
+    uniqueID: 2416243277
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2112975189
     locked: 0

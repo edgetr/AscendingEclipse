@@ -34,20 +34,8 @@ public class PlayerMovement : MonoBehaviour
         // Set animator parameters
         anim.SetBool("Run", horizontalInput != 0);
         anim.SetBool("Grounded", isGrounded());
-
-        // Prioritize wall animations over falling
-        if (onWall())
-        {
-            anim.SetBool("OnSlide", onSlide());
-            anim.SetBool("OnWall", onWall());
-            anim.SetBool("OnFall", false);
-        }
-        else
-        {
-            anim.SetBool("OnWall", false);
-            anim.SetBool("OnSlide", false);
-            anim.SetBool("OnFall", onFall());
-        }
+        anim.SetBool("OnFall", onFall());
+        anim.SetBool("OnWall", onWall());
 
         // Wall jump logic
         if (wallJumpCooldown > 0.2f)
@@ -56,15 +44,8 @@ public class PlayerMovement : MonoBehaviour
 
             if (onWall() && !isGrounded())
             {
-                if (onSlide())
-                {
-                    WallSlide();
-                }
-                else
-                {
-                    body.gravityScale = 0;
-                    body.velocity = Vector2.zero;
-                }
+                body.gravityScale = 0;
+                body.velocity = Vector2.zero;
             }
             else
             {
@@ -126,9 +107,8 @@ public class PlayerMovement : MonoBehaviour
         return !isGrounded() && !onWall() && body.velocity.y < 0;
     }
 
-    private bool onSlide()
+    public bool canAttack()
     {
-        // Check if the player is on the wall, not grounded, and pressing the down key or 's' key
-        return onWall() && !isGrounded() && (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S));
+        return horizontalInput == 0 && isGrounded() && !onWall();
     }
 }
