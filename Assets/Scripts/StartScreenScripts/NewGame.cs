@@ -11,6 +11,12 @@ public class NewGame : MonoBehaviour
         SceneManager.LoadSceneAsync("Level1");
     }
 
+    public void QuitGame()
+    {
+
+        Application.Quit();
+    }
+
 
 
 }
