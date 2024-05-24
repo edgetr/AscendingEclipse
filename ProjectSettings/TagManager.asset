@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - TutorialRequirement
+  - Portal
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - UI
   - Wall
   - Background
-  - Warrior
-  - 
+  - Player
+  - Enemy
   - 
   - 
   - 
@@ -40,12 +41,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Character
-    uniqueID: 2416243277
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Background
     uniqueID: 2112975189
+    locked: 0
+  - name: ForeGround
+    uniqueID: 2695629375
+    locked: 0
+  - name: Player
+    uniqueID: 2416243277
+    locked: 0
+  - name: Ground
+    uniqueID: 33114317
     locked: 0

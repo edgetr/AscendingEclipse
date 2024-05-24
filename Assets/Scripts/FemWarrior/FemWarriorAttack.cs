@@ -15,8 +15,18 @@ public class FemWarriorAttack : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && cooldownTimer > attackCooldown && PlayerMovement.canAttack())
-            Attack();
+        if (Input.GetMouseButton(0) && cooldownTimer > attackCooldown)
+        {
+            if (PlayerMovement.canAttack())
+            {
+                Attack();
+            }
+            else
+            {
+                DashAttack();
+            }
+        }
+
 
         cooldownTimer += Time.deltaTime;
     }
@@ -24,6 +34,11 @@ public class FemWarriorAttack : MonoBehaviour
     private void Attack()
     {
         anim.SetTrigger("Attack");
+        cooldownTimer = 0;
+    }
+    private void DashAttack()
+    {
+        anim.SetTrigger("DashAttack");
         cooldownTimer = 0;
     }
 }
