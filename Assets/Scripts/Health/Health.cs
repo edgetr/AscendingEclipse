@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -34,7 +33,10 @@ public class Health : MonoBehaviour
         {
             if (!dead)
             {
-                GetComponent<PlayerMovement>().enabled = false;
+                if (GetComponent<PlayerMovement>() != null)
+                    GetComponent<PlayerMovement>().enabled = false;
+
+                GetComponent<ForestBoss>().enabled = false;
                 anim.SetBool("Grounded", true);
                 anim.SetTrigger("Die");
                 dead = true;

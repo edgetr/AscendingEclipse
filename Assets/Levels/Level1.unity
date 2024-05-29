@@ -13893,7 +13893,7 @@ Transform:
   m_GameObject: {fileID: 312962882}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.62, y: 3.9, z: 0}
+  m_LocalPosition: {x: 0, y: 0.19, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13976,7 +13976,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0020677298, y: -0.09408219}
@@ -14056,9 +14056,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d23d38708a2a774d8a59c13a51bc594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 3
-  iFramesDuration: 0
-  numberOfFlashes: 0
+  startingHealth: 50
+  iFramesDuration: 0.1
+  numberOfFlashes: 1
 --- !u!114 &312962889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14072,11 +14072,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCoolDown: 1
-  range: 1
+  range: 1.09
+  colliderDistance: 0.15
   damage: 2
   playerLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 256
   boxCollider: {fileID: 312962886}
 --- !u!1 &313049256
 GameObject:
@@ -99596,7 +99597,7 @@ Transform:
   m_GameObject: {fileID: 2129409567}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.1000004, y: -7.7, z: 0}
+  m_LocalPosition: {x: 1.87, y: -8.04, z: 0}
   m_LocalScale: {x: 10, y: 10, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -99784,6 +99785,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCooldown: 1
+  attackRange: 13.28
+  attackDamage: 3
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &2129409575
 MonoBehaviour:
   m_ObjectHideFlags: 0

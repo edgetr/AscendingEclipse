@@ -47,7 +47,6 @@ public class FemWarriorAttack : MonoBehaviour
     {
         anim.SetTrigger("Attack");
         cooldownTimer = 0;
-        // Perform attack and damage enemies
         DealDamage();
     }
 
@@ -55,7 +54,6 @@ public class FemWarriorAttack : MonoBehaviour
     {
         anim.SetTrigger("DashAttack");
         cooldownTimer = 0;
-        // Perform dash attack and damage enemies
         DealDamage();
     }
 
@@ -71,9 +69,9 @@ public class FemWarriorAttack : MonoBehaviour
         }
     }
 
+
     private void OnDrawGizmosSelected()
     {
-        // Draw a sphere around the player to show the attack range
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
