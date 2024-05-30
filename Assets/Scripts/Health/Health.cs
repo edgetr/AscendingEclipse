@@ -35,8 +35,6 @@ public class Health : MonoBehaviour
             {
                 if (GetComponent<PlayerMovement>() != null)
                     GetComponent<PlayerMovement>().enabled = false;
-
-                GetComponent<ForestBoss>().enabled = false;
                 anim.SetBool("Grounded", true);
                 anim.SetTrigger("Die");
                 dead = true;

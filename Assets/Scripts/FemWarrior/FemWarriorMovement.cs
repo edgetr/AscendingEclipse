@@ -31,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        // Grab references for Rigidbody2D and Animator from the object
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
