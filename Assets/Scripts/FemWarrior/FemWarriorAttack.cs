@@ -8,6 +8,7 @@ public class FemWarriorAttack : MonoBehaviour
     [SerializeField] private int attackDamage;
     [SerializeField] private LayerMask enemyLayer;
 
+
     private Animator anim;
     private PlayerMovement playerMovement;
     private float cooldownTimer = Mathf.Infinity;
@@ -37,7 +38,7 @@ public class FemWarriorAttack : MonoBehaviour
             }
         }
 
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
             isAttacking = false;
         }
