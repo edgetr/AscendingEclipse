@@ -13,6 +13,8 @@ public class ForestBoss : MonoBehaviour
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private BoxCollider2D attackCollider;
 
+    [SerializeField] private GameOverScreen gameOverScreen;
+
     private float cooldownTimer = Mathf.Infinity;
     private Animator anim;
     private Health playerHealth;
@@ -23,6 +25,7 @@ public class ForestBoss : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         attackCollider.isTrigger = true; // Ensure the attack collider is set as a trigger
+        playerHealth = GetComponent<Health>();
     }
 
     private void Start()
@@ -42,6 +45,10 @@ public class ForestBoss : MonoBehaviour
                 cooldownTimer = 0;
                 anim.SetTrigger("Attack");
             }
+        }
+        if (playerHealth.currentHealth <= 0)
+        {
+            HandleBossDeath();
         }
     }
 
@@ -69,4 +76,10 @@ public class ForestBoss : MonoBehaviour
         if (PlayerInSight())
             playerHealth.TakeDamage(damage);
     }
+
+    private void HandleBossDeath()
+    {
+        gameOverScreen.Setup();
+    }
+
 }
