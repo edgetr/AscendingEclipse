@@ -59,10 +59,7 @@ public class FemWarriorAttack : MonoBehaviour
 
     private void DealDamage()
     {
-        // Get all enemies in the attack range
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
-
-        // Deal damage to each enemy
         foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<Health>().TakeDamage(attackDamage);
