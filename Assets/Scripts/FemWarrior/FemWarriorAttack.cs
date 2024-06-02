@@ -8,6 +8,8 @@ public class FemWarriorAttack : MonoBehaviour
     [SerializeField] private int attackDamage;
     [SerializeField] private LayerMask enemyLayer;
 
+    AudioManager audioManager;
+
 
     private Animator anim;
     private PlayerMovement playerMovement;
@@ -18,6 +20,8 @@ public class FemWarriorAttack : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
     }
 
     private void Update()
@@ -30,11 +34,13 @@ public class FemWarriorAttack : MonoBehaviour
             {
                 Attack();
                 isAttacking = true;
+
             }
             else
             {
                 DashAttack();
                 isAttacking = true;
+
             }
         }
 
@@ -49,6 +55,8 @@ public class FemWarriorAttack : MonoBehaviour
         anim.SetTrigger("Attack");
         cooldownTimer = 0;
         DealDamage();
+        audioManager.PlaySFX(audioManager.attack);
+
     }
 
     private void DashAttack()
@@ -56,6 +64,7 @@ public class FemWarriorAttack : MonoBehaviour
         anim.SetTrigger("DashAttack");
         cooldownTimer = 0;
         DealDamage();
+        audioManager.PlaySFX(audioManager.attack);
     }
 
     private void DealDamage()

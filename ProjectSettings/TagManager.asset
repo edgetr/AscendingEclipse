@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - TutorialRequirement
   - Portal
+  - Audio
   layers:
   - Default
   - TransparentFX
