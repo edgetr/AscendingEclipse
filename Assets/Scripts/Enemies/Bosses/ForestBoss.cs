@@ -17,8 +17,14 @@ public class ForestBoss : MonoBehaviour
     [SerializeField] private float deathDelay;
     [SerializeField] private Vector2 deathTeleportLocation = new Vector2(-1000, -1000);
     [SerializeField] private Transform player;
-    [SerializeField] private float movementSpeed = 2f; // Movement speed of the boss
-    [SerializeField] private float stopDistance = 1f; // Distance to stop from player
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private float stopDistance;
+    [SerializeField] private float detectionRange;
+    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float obstacleDetectionRange = 1f;
+    [SerializeField] private LayerMask obstacleLayer;
+
+
 
     private float cooldownTimer = Mathf.Infinity;
     private Animator anim;
@@ -61,7 +67,9 @@ public class ForestBoss : MonoBehaviour
     {
         if (rb != null)
         {
-            rb.bodyType = RigidbodyType2D.Dynamic; // Set to Dynamic to enable gravity
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.gravityScale = 1f;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
@@ -70,6 +78,7 @@ public class ForestBoss : MonoBehaviour
         cooldownTimer += Time.deltaTime;
 
         isGrounded = IsGrounded();
+        Debug.Log("Is Grounded: " + isGrounded);
 
         if (player != null)
         {
@@ -88,32 +97,61 @@ public class ForestBoss : MonoBehaviour
                 }
             }
         }
-
-        anim.SetBool("Grounded", isGrounded);
     }
 
     private void MoveTowardsPlayer()
     {
-        if (isGrounded)
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        if (distanceToPlayer <= detectionRange && distanceToPlayer > stopDistance)
         {
-            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-            if (distanceToPlayer > stopDistance)
+            Vector2 direction = (player.position - transform.position).normalized;
+            rb.velocity = new Vector2(direction.x * movementSpeed, rb.velocity.y);
+            Debug.Log("Moving towards player");
+            anim.SetBool("moving", true);
+
+            if (IsObstacleAhead() && isGrounded)
             {
-                Vector2 direction = (player.position - transform.position).normalized;
-                rb.velocity = new Vector2(direction.x * movementSpeed, rb.velocity.y);
-            }
-            else
-            {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                Jump();
             }
         }
+        else
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            Debug.Log("Stopping near player or out of detection range");
+            anim.SetBool("moving", false);
+        }
     }
+    private bool IsObstacleAhead()
+    {
+        Vector2 direction = facingRight ? Vector2.right : Vector2.left;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, obstacleDetectionRange, obstacleLayer);
+        Debug.DrawRay(transform.position, direction * obstacleDetectionRange, Color.yellow); // Visualize the raycast
+        return hit.collider != null;
+    }
+
+
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        Debug.Log("Jumping");
+        anim.SetTrigger("Jump");
+    }
+
 
     private bool IsGrounded()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
+        Vector2 boxCenter = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y - 0.1f);
+        Vector2 boxSize = new Vector2(boxCollider.bounds.size.x, 0.1f);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCenter, boxSize, 0, Vector2.down, 0.1f, groundLayer);
+
+        Debug.DrawRay(boxCenter, Vector2.down * 0.1f, Color.red);
+        Debug.DrawRay(boxCenter + new Vector2(-boxSize.x / 2, 0), Vector2.down * 0.1f, Color.red);
+        Debug.DrawRay(boxCenter + new Vector2(boxSize.x / 2, 0), Vector2.down * 0.1f, Color.red);
+        Debug.Log("Ground check hit: " + (raycastHit.collider != null ? raycastHit.collider.name : "null"));
+
         return raycastHit.collider != null;
     }
+
 
     private bool PlayerInSight()
     {
